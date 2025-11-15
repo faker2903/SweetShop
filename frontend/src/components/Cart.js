@@ -106,14 +106,33 @@ const Cart = ({ user, onClose }) => {
                         <p className="text-small text-white/70">${item.price.toFixed(2)} each</p>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <input
-                          type="number"
-                          min="0"
-                          max={item.sweet.quantity + item.quantity}
-                          value={item.quantity}
-                          onChange={(e) => handleUpdateQuantity(item.sweet._id, parseInt(e.target.value) || 0)}
-                          className="w-16 px-3 py-2 bg-white/10 backdrop-blur-md border border-white/30 rounded-xl text-white text-center font-medium focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 transition-all duration-300"
-                        />
+                        <div className="flex items-center bg-white/10 backdrop-blur-md border border-white/30 rounded-xl overflow-hidden">
+                          <button
+                            onClick={() => handleUpdateQuantity(item.sweet._id, Math.max(1, item.quantity - 1))}
+                            disabled={item.quantity <= 1}
+                            className="px-3 py-2 text-white font-bold hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            −
+                          </button>
+                          <input
+                            type="number"
+                            min="1"
+                            max={item.sweet.quantity + item.quantity}
+                            value={item.quantity}
+                            onChange={(e) => {
+                              const value = parseInt(e.target.value) || 1;
+                              handleUpdateQuantity(item.sweet._id, Math.max(1, Math.min(item.sweet.quantity + item.quantity, value)));
+                            }}
+                            className="w-12 px-2 py-2 bg-transparent text-white text-center font-medium focus:outline-none"
+                          />
+                          <button
+                            onClick={() => handleUpdateQuantity(item.sweet._id, Math.min(item.sweet.quantity + item.quantity, item.quantity + 1))}
+                            disabled={item.quantity >= (item.sweet.quantity + item.quantity)}
+                            className="px-3 py-2 text-white font-bold hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            +
+                          </button>
+                        </div>
                         <button
                           onClick={() => handleRemoveItem(item.sweet._id)}
                           className="px-3 py-2 bg-red-500/80 backdrop-blur-md text-white rounded-xl font-medium hover:bg-red-500 border border-red-400/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-transparent"
