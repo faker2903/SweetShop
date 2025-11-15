@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://sweet-shop-y6vp.vercel.app/api';
+const API_BASE_URL = 'https://sweet-shop-y6vp.vercel.app/';
 
 // Create axios instance
 const api = axios.create({
