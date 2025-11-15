@@ -112,16 +112,34 @@ const SweetCard = ({ sweet, user, onPurchase, onEdit, onDelete, onAddToCart }) =
             <div className="flex items-center gap-3">
               <div className="flex items-center space-x-2">
                 <label htmlFor={`quantity-${sweet._id}`} className="text-small font-medium text-white/90">Qty:</label>
-                <input
-                  id={`quantity-${sweet._id}`}
-                  type="number"
-                  min="1"
-                  max={sweet.quantity}
-                  value={cartQuantity}
-                  onChange={(e) => setCartQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                  className="w-16 px-3 py-2 bg-white/10 backdrop-blur-md border border-white/30 rounded-xl text-white text-center font-medium focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 transition-all duration-300 placeholder-white/60 text-sm"
-                  placeholder="1"
-                />
+                <div className="flex items-center bg-white/10 backdrop-blur-md border border-white/30 rounded-xl overflow-hidden">
+                  <button
+                    onClick={() => setCartQuantity(Math.max(1, cartQuantity - 1))}
+                    disabled={cartQuantity <= 1}
+                    className="px-3 py-2 text-white font-bold hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                  >
+                    −
+                  </button>
+                  <input
+                    id={`quantity-${sweet._id}`}
+                    type="number"
+                    min="1"
+                    max={sweet.quantity}
+                    value={cartQuantity}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value) || 1;
+                      setCartQuantity(Math.max(1, Math.min(sweet.quantity, value)));
+                    }}
+                    className="w-12 px-2 py-2 bg-transparent text-white text-center font-medium focus:outline-none text-sm"
+                  />
+                  <button
+                    onClick={() => setCartQuantity(Math.min(sweet.quantity, cartQuantity + 1))}
+                    disabled={cartQuantity >= sweet.quantity}
+                    className="px-3 py-2 text-white font-bold hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                  >
+                    +
+                  </button>
+                </div>
               </div>
               <button
                 onClick={handleAddToCart}
