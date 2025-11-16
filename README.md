@@ -179,15 +179,6 @@ Authentication: JWT tokens should be sent in Authorization header as `Bearer <to
 
 ---
 
-## Testing
-
-- Unit and integration tests (if present) can be run via:
-  - Backend: npm test
-  - Frontend: npm test
-- Add tests for critical business logic (auth, cart management, payments).
-
----
-
 ## Deployment
 
 - Backend: Deploy to a Node-compatible host (Heroku, Render, Railway, DigitalOcean App Platform, etc.). Ensure MONGO_URI and JWT_SECRET are set in the environment.
@@ -232,3 +223,4 @@ If you'd like, I can:
 - Add a badge section (build, license, coverage).
 - Generate an example .env file.
 - Produce API documentation (OpenAPI/Swagger) from the actual backend routes if you point me to the backend code.
+
